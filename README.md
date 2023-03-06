@@ -8,3 +8,11 @@ UserParameter=cpu-t.core0,sensors coretemp-isa-00000 | grep 'Core 0:' | cut -c17
 https://sevo44.ru/monitoring-temperatury-v-zabbix/
 https://sevo44.ru/zabbix-agent-ustanovka-i-nastrojka/#_zabbix_get
 https://sevo44.ru/monitoring-temperatury-v-zabbix/#zabbix_server_work
+
+sensors -u coretemp-isa-0000
+nano /etc/sensors.d/*file*
+chip "coretemp-isa-0000"
+  label temp2 "Core 0"
+  label temp3 "Core 1"
+  label temp11 "Core 2"
+  label temp12 "Core 3"
