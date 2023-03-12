@@ -1,39 +1,93 @@
-#### Install zabbix
+# **🤔 HOW TO install Zabbix**
 
+
+## Official site
+[Zabbix](https://www.zabbix.com/)
+
+## Contents
+1. [📊 Install Zabbix]()
+2. [🐬 Install MySQL]()
+3. [🖼 Install Windows agents]()
+4. [🐧 Install Linux agents]()
+
+### 0. Install locales
+Install locales and generate the required locale
+```
+apt install -y locales
+```
+```
+locale-gen en_US.UTF-8
+```
+
+### 1. 📊 Install Zabbix
+Download & Install Zabbix repository package
+```
 wget https://repo.zabbix.com/zabbix/6.4/ubuntu/pool/main/z/zabbix-release/zabbix-release_6.4-1+ubuntu22.04_all.deb
+```
+```
 dpkg -i zabbix-release_6.4-1+ubuntu22.04_all.deb
+```
+```
 apt update 
-
+```
+```
 apt install zabbix-server-mysql zabbix-frontend-php zabbix-apache-conf zabbix-sql-scripts zabbix-agent
-
-wget https://repo.mysql.com/mysql-apt-config_0.8.24-1_all.deb
-dpkg -i mysql-apt-config_0.8.24-1_all.deb
-apt update
-apt install mysql-server
-
-mysql -u root -p
-
-create database zabbix character set utf8mb4 collate utf8mb4_bin;
-create user zabbix@localhost identified by 'Dimmed6';
-grant all privileges on zabbix.* to zabbix@localhost;
-flush privileges;
-set global log_bin_trust_function_creators = 1;
-quit;
-
-zcat /usr/share/zabbix-sql-scripts/mysql/server.sql.gz | mysql --default-character-set=utf8mb4 -u zabbix -p zabbix 
-
-mysql -uroot -p
-set global log_bin_trust_function_creators = 0;
-quit; 
-
-Отредактируйте файл /etc/zabbix/zabbix_server.conf 
+```
+Отредактируйте файл /etc/zabbix/zabbix_server.conf
+```
 DBPassword=Dimmed6
+```
+```
+systemctl restart zabbix-server zabbix-agent apache2 && systemctl enable zabbix-server zabbix-agent apache2
+```
 
-systemctl restart zabbix-server zabbix-agent apache2
-systemctl enable zabbix-server zabbix-agent apache2
+### 2. 🐬 Install MySQL
 
-sudo apt install -y locales
-sudo locale-gen en_US.UTF-8
+```
+wget https://repo.mysql.com/mysql-apt-config_0.8.24-1_all.deb
+```
+```
+dpkg -i mysql-apt-config_0.8.24-1_all.deb
+```
+```
+apt update
+```
+```
+apt install mysql-server
+```
+```
+mysql -u root -p
+```
+```
+create database zabbix character set utf8mb4 collate utf8mb4_bin;
+```
+```
+create user zabbix@localhost identified by 'Dimmed6';
+```
+```
+grant all privileges on zabbix.* to zabbix@localhost;
+```
+```
+flush privileges;
+```
+```
+set global log_bin_trust_function_creators = 1;
+```
+```
+quit;
+```
+```
+zcat /usr/share/zabbix-sql-scripts/mysql/server.sql.gz | mysql --default-character-set=utf8mb4 -u zabbix -p zabbix 
+```
+```
+mysql -uroot -p
+```
+```
+set global log_bin_trust_function_creators = 0;
+```
+```
+quit; 
+```
 
 #### Windows agent config
 
